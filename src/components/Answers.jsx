@@ -1,9 +1,8 @@
-
 import { useRef } from "react";
 
 const Answers = ({
     answers,
-    userAnswers,
+    selectedAnswer,
     answerState,
     handleSelectedAnswer,
 }) => {
@@ -15,19 +14,13 @@ const Answers = ({
     return (
         <ul id="answers">
             {shuffledAnswers.current?.map((answer) => {
-                const isSelected =
-                    userAnswers[userAnswers.length - 1] === answer;
+                const isSelected = selectedAnswer === answer;
                 let cssClass = "";
 
                 if (answerState === "answered" && isSelected) {
                     cssClass = "selected";
                 }
-                console.log("answerState", answerState);
-                console.log(
-                    "",
-                    (answerState === "correct" || answerState === "wrong") &&
-                        isSelected,
-                );
+
                 if (
                     (answerState === "correct" || answerState === "wrong") &&
                     isSelected
@@ -42,6 +35,7 @@ const Answers = ({
                                 handleSelectedAnswer(answer);
                             }}
                             className={cssClass}
+                            disabled={answerState !== ""}
                         >
                             {answer}
                         </button>
